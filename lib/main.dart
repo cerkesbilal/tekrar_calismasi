@@ -32,6 +32,7 @@ class _TasarimTekrarState extends State<TasarimTekrar> {
         backgroundColor: Colors.pink,
         foregroundColor: Colors.white,
       ),
+      body: Container(),
     );
   }
 }
