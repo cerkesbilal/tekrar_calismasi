@@ -33,32 +33,132 @@ class _TasarimTekrarState extends State<TasarimTekrar> {
         foregroundColor: Colors.white,
       ),
       body: Center(
-        child: Container( 
-          alignment: Alignment.center,
-          child: Text("Osman Pazarlama"),
-          height: 200,
-          width: 200,
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            image: DecorationImage
-            (
-              opacity: 0.2,
-              fit: BoxFit.cover,
-              image:NetworkImage("https://static3.depositphotos.com/1006065/229/i/450/depositphotos_2299392-stock-photo-cat.jpg")),
- 
-            //shape: BoxShape.circle,
-            border: Border.all(color: Colors.black, width: 5),
-            borderRadius: BorderRadius.horizontal(left: Radius.circular(10), right: Radius.circular(10))
-
-          ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              color: Colors.red,
+              height: 300,
+               width: 300,),
+            Positioned(
+              top: -40,
+              left: 100,
+              child: Container(
+                
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle
+                ),
+              
+                height: 100,
+                 width: 100,
+              ),
+            ), 
+          ],
         ),
-      ),
+      )
     );
   }
 }
 
 /*
-Container:
+4)Stack: Üst üste yapılar kullanmak için vardır:
+
+children ve clipBehavior özellikleri vardır. Clip.none dediğinizde artık o eleman stack i terk edebilir. tasarım da önemlidir.
+
+Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              color: Colors.red,
+              height: 300,
+               width: 300,),
+            Positioned(
+              top: -40,
+              left: 100,
+              child: Container(
+                
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle
+                ),
+              
+                height: 100,
+                 width: 100,
+              ),
+            ), 
+          ],
+        ),
+3)Column: Elemanları dikeyde sıralamak için kullanılır. 
+
+Container(
+    
+        width: 300,
+        color: Colors.black,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              color: Colors.red,
+              width: 100,
+              height: 100,
+            ),
+            Container(
+              color: Colors.green,
+              width: 100,
+              height: 100,
+            ),
+            Container(
+              color: Colors.blue,
+              width: 100,
+              height: 100,
+            ),
+            Container(
+              color: Colors.cyan,
+              width: 100,
+              height: 100,
+            )
+          ],
+        ),
+      )
+2)Row:Container child aldığı için tek eleman alabiliyor ama bize bazen birden fazla elemanı aynı anda ekleyebilmeye ihtiyacımız var. Eğer bu elemanları yatayda yan yana koymak istiyorsak row kullanılır. 
+-Row un üç tane önemli parametresi var:
+
+A)children : içerisine yan yana dizdiğimiz elemanları koyarız:
+
+Row(
+          children: [
+          Container(
+            height: 100,
+            width: 100,
+            color: Colors.red,
+            child: Text("Selam"),
+          ),
+          Container(
+            height: 100,
+            width: 100,
+            color: Colors.green,
+            child: Text("Selam"),
+          ),
+          Container(
+            height: 100,
+            width: 100,
+            color: Colors.purple,
+            child: Text("Selam"),
+          )
+        ],)
+      ),
+B)MainAxisSize: row un alanını belirler. Varsayılan olarak max dır yani yatayda her yeri kaplar. min yaparsak sadece çocukları kadar yer kaplar
+
+C)MainAxisAlignment: elemanların row içinde nasıl dizilmesi gerektiğini söyler. !!! MainAxisSize.max olmak zorunda. Betweeni Around, Evenly gibi parametreleri vardır:
+
+Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+d)CrossAxisAligment: Row a ters bir etki yarattırır yani dikeyde sıralamayı sağlar.
+-----------------------------------------
+1)Container:
 -Kutu anlamına gelir. 
 -Container eğer çocuğu yoksa parent kadar yer kaplar. Eğer çocuk atamıyorsan mutlaka en boy vermek zorundasın.
  body: Container(
@@ -211,6 +311,51 @@ decoration: BoxDecoration(
               fit: BoxFit.cover,
               image:NetworkImage("https://static3.depositphotos.com/1006065/229/i/450/depositphotos_2299392-stock-photo-cat.jpg")),
 
-              
+shadow:
+decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+//Eğer shadow verecekseniz bir arka olan renginizin olması gerekir eğer yoksa shadow rengi arka planıda kaplar.blurRadius gölge şiddeti, ofsett gölge yönü
+                color: Colors.black54,
+                blurRadius: 20,
+                offset: Offset(3, 3)    
+              )
+            ],
+gradient: Renk geçişi yapmamızı salar. decoration içerisinde tanımlanmalıdır. içine LinearGradient alır. Bunun üç önemli parametresi vardır. colors: renk listesi alır. begin: rengin nerden başlayacağı, end: rengin nerede biteceği
+
+  gradient: LinearGradient(colors: [
+             const Color.fromARGB(255, 2, 90, 242),
+             const Color.fromARGB(255, 36, 123, 200),
+             Colors.blue.shade300 
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight
+            ),           
  
 */
+
+//Container- BoxDecoration-Şevval
+//Column, Row - Nergiz
+//Text - Kemal
+//TextField - Beyza
+//Resim ekleme türleri - Begüm
+//Boyutlandırma Araçları(Expanded, Flexible, SizedBox, Spacer)- Safiye
+//Button ve button tasarımı - Ataberk
+//Navigator ve veri aktarımı - Onur
+//Align, Slider, Divider, CirculAvatar - Erkan
+//Radio, checkbox - Mehmet
+//Listview - Yusuf Tuncat
+//Gridview - Aydanur
+//Card, ListTile, Center - Efe Gerek
+//Forms(textformfield, validate) - Muhammed
+//Tabbar - Uğur
+//Bottom navigator bar - Yusuf Berke
+//Drawer - Yasin
+//alert - Osman
+//Snackbar - Umut
+//Appbar - Ali
+//Align, Positioned, Stack - Meriç
+//MaterialApp - Ahmet
+//stateless ve statefull ve setstate ve initstate - Ensar
+//Dropdownbutton ve popummenu - Metehan
