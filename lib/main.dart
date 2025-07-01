@@ -6,7 +6,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,15 +18,34 @@ class MyApp extends StatelessWidget {
         //brightness: Brightness.dark,
         elevatedButtonTheme:
             ElevatedButtonThemeData(
-              style:
-                  ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Colors
-                            .pink
-                            .shade200,
-                    foregroundColor:
-                        Colors.brown,
-                  ),
+              style: ElevatedButton.styleFrom(
+                textStyle: TextStyle(
+                  fontSize: 24,
+                ),
+                padding:
+                    EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 25,
+                    ),
+                backgroundColor: Colors
+                    .pink
+                    .shade200,
+                foregroundColor:
+                    Colors.white,
+              ),
+            ),
+        textButtonTheme:
+            TextButtonThemeData(
+              style: TextButton.styleFrom(
+                textStyle: TextStyle(
+                  fontSize: 24,
+                ),
+                padding:
+                    EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 25,
+                    ),
+              ),
             ),
         primarySwatch: Colors.pink,
         useMaterial3: false,
@@ -49,13 +67,11 @@ class TasarimTekrar
 
 class _TasarimTekrarState
     extends State<TasarimTekrar> {
+  bool isVisibility = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton:
-          FloatingActionButton(
-            onPressed: () {},
-          ),
       appBar: AppBar(
         title: Text(
           "Tasarım Tekrar",
@@ -65,98 +81,36 @@ class _TasarimTekrarState
         ),
         backgroundColor: Colors.brown,
       ),
-      body: Container(
+      body: Center(
         child: Column(
+          mainAxisAlignment:
+              MainAxisAlignment.center,
           children: [
-            Container(
-              child: Text("Selam"),
-              color: Colors.amber,
-              height: 100,
-              width: 100,
+            Opacity(
+              opacity: isVisibility
+                  ? 1
+                  : 0,
+              child: Container(
+                height: 180,
+                width: 180,
+                color: Colors.red,
+              ),
             ),
+            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
-              child: Text("Selam"),
+              onPressed: () {
+                setState(() {
+                  isVisibility =
+                      !isVisibility;
+                });
+              },
+              child: Text(
+                "Görünür Yap",
+              ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Row flexibleOrnek() {
-    return Row(
-      children: [
-        Flexible(
-          child: Container(
-            height: 120,
-            width: 400,
-            color: Colors.red,
-          ),
-        ),
-
-        Flexible(
-          child: Container(
-            height: 120,
-            width: 100,
-            color: Colors.green,
-          ),
-        ),
-
-        Flexible(
-          child: Container(
-            height: 120,
-            width: 120,
-            color: Colors.yellow,
-          ),
-        ),
-        Flexible(
-          child: Container(
-            height: 120,
-            width: 120,
-            color: Colors.brown,
-          ),
-        ),
-        Flexible(
-          child: Container(
-            height: 120,
-            width: 120,
-            color: Colors.orange,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Row ExpandedOrnek() {
-    return Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: Container(
-            color: Colors.amber,
-            child: Text("Resim Alanı"),
-            height: 140,
-          ),
-        ),
-
-        Expanded(
-          flex: 5,
-          child: Container(
-            color: Colors.blue,
-            child: Text("title alanı"),
-            height: 140,
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
-            color: Colors.green,
-            child: Text("İcon Alanı"),
-            height: 140,
-          ),
-        ),
-      ],
     );
   }
 }
@@ -183,12 +137,215 @@ class _TasarimTekrarState
 21)AppBar:
 20)PopUp Menü
 19)DropDownbutton
+
+
 18)Visbility ve Opacity
+Visibility: Kaybolacak olan objenin alanınında yok olmasını istersen yani objenin gizlenmesi değilde yok olmasını istiyorsan kullanılır
+
+ Visibility(
+              visible: isVisibility,
+              child: Container(
+                height: 180,
+                width: 180,
+                color: Colors.red,
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isVisibility =
+                      !isVisibility;
+                });
+              },
+              child: Text(
+                "Görünür Yap",
+              ),
+            ),
+
+Opacity: objenin sadece görünümü yok olur yeri sabit kalır.
+
+Opacity(
+              opacity: isVisibility
+                  ? 1
+                  : 0,
+              child: Container(
+                height: 180,
+                width: 180,
+                color: Colors.red,
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isVisibility =
+                      !isVisibility;
+                });
+              },
+              child: Text(
+                "Görünür Yap",
+              ),
+            ),
+
 17)Butonlar
-16)FadenImage, intrinsicheight, placeholder
+Center(
+        child: Column(
+          mainAxisAlignment:
+              MainAxisAlignment.center,
+          children: [
+            //TextButton
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                "Text Button",
+              ),
+            ),
+
+            //TextButton.icon
+            TextButton.icon(
+              onPressed: () {},
+              label: Text(
+                "Text and Icon button",
+              ),
+              icon: Icon(Icons.add),
+            ),
+
+            ElevatedButton(
+              onPressed: () {},
+              child: Text(
+                "Elevated Button",
+              ),
+            ),
+            ElevatedButton.icon(
+              onPressed: () {},
+              label: Text(
+                "Elevated ve Icon",
+              ),
+              icon: Icon(Icons.menu),
+            ),
+
+            OutlinedButton(
+              onPressed: () {},
+              child: Text(
+                "OutlinedButton",
+              ),
+            ),
+
+            OutlinedButton.icon(
+              onPressed: () {},
+              label: Text(
+                "Outlined ve Icon",
+              ),
+              icon: Icon(
+                Icons.abc_outlined,
+              ),
+            ),
+          ],
+        ),
+      ),
+
+16)
+İntrinSicHeight: Eğer bir rowunuzda resimler yanyana ama yükseklikleri eşit değilse çok çirkin ve responsive olmayan bir görüntü oluşur. bunu en büyük resme göre diğerlerini ayarla demek için kullanırız. 
+
+ Container(
+          height: 300,
+          width: 300,
+          child: Placeholder(
+            color: Colors.red,
+          ),
+        ),
+
+
+FadeinImage, intrinsicheight, placeholder
+FadeinImage: İnternetten veri çekerken hata olma ya da uzun sürme işlemlerinden kaynaklı durumlar için bir placeholder alanı koyabildiğimiz resim ekleme türüdür. Dikkat!!! sadece network image işlemleri için kullanılır. 
+
+"https://e7.pngegg.com/pngimages/328/2/png-clipart-pet-kitten-kitty-kitten.png",
+
+c)Placeholder: Uygulamada bir resim koyacaksınız ama o işlemi şuan yapmak istemiyorsanız buraya resim gelecek anlamına gelir. 
+
+
 15)Resim Ekleme:
-14)BuildContext
+- Uygulamamıza eklediğimiz resim klasörü mutlaka lib in dışında olmalı. Yani lib, android, iso gibi dosyalarla aynı sırada olmalı
+-Oluşturduğunuz klasör isminde asla boşluk ya da türkçe karakter olmamalı.
+-uses-material-design: true yapısı ile aynı hizada:
+flutter:
+  uses-material-design: true
+  asset:
+    resimler/
+şeklinde tanımlanmalı hiza çok önemli
+
+-eğer bunu eklediysen mutlaka uygulamayı durdurmalısın.Comand(Ctrl) + s ve ok ile pub get yaplmalı (ve her harf değişikliği(resim isimi değiştirilirken ya da yeni resim klasöre eklenirken yukarıdaki işlem tekrar yapılmalı))
+
+-Resim getirme işlemleri türlerine göre 2 ye getirilme şekillerine de göre de 2 ye ayrılır:
+
+-İstenilen veri türülü Widget
+a)Image.asset("url")//dosya çağırırken
+b)Image.network("url")//internetten çağırırken
+-İstenlen veri türü ImageProvider ise
+a)AssetImage("url")//dosya çağırırken
+b)NetworkImage("url")//internetten çağırırken
+
+
+SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200,
+              width: 200,
+              child: Image.asset(
+                "resimler/kedi.jpg",
+              ),
+            ),
+            SizedBox(height: 20),
+            SizedBox(
+              height: 220,
+              width: 220,
+              child: Image.network(
+                "https://e7.pngegg.com/pngimages/630/209/png-clipart-cat-animal-cat.png",
+              ),
+            ),
+            Divider(
+              thickness: 5,
+              color: Colors.black,
+            ),
+
+            Container(
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    "resimler/kedi.jpg",
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+
+            Container(
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                    "https://e7.pngegg.com/pngimages/630/209/png-clipart-cat-animal-cat.png",
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+
+
+
+14)BuildContext: bir uygulamanın üstündeki yapılarla ileşimini sağlar. 
 13)Statefull ve setstate:
+TextEditingControlller controller = TextEditingControlller();
+
+-Bütün oluşturma işlemlerini initstate de yapmalısınız.
+-Eğer silinebilen bir yapıdaysa o zamanda dispose içine yazıcaz.
 
 12)MaterialApp ve Theme:
 MaterialApp(
