@@ -10,58 +10,340 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: TextTheme(
+          displaySmall: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        //brightness: Brightness.dark,
+        elevatedButtonTheme:
+            ElevatedButtonThemeData(
+              style:
+                  ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Colors
+                            .pink
+                            .shade200,
+                    foregroundColor:
+                        Colors.brown,
+                  ),
+            ),
+        primarySwatch: Colors.pink,
+        useMaterial3: false,
+      ),
       debugShowCheckedModeBanner: false,
       home: TasarimTekrar(),
     );
   }
 }
 
-class TasarimTekrar extends StatefulWidget {
+class TasarimTekrar
+    extends StatefulWidget {
   const TasarimTekrar({super.key});
 
   @override
-  State<TasarimTekrar> createState() => _TasarimTekrarState();
+  State<TasarimTekrar> createState() =>
+      _TasarimTekrarState();
 }
 
-class _TasarimTekrarState extends State<TasarimTekrar> {
+class _TasarimTekrarState
+    extends State<TasarimTekrar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton:
+          FloatingActionButton(
+            onPressed: () {},
+          ),
       appBar: AppBar(
-        title: Text("Tasarım Tekrar"),
-        backgroundColor: Colors.pink,
-        foregroundColor: Colors.white,
+        title: Text(
+          "Tasarım Tekrar",
+          style: Theme.of(
+            context,
+          ).textTheme.displaySmall,
+        ),
+        backgroundColor: Colors.brown,
       ),
-      body: Center(
-        child: Stack(
-          clipBehavior: Clip.none,
+      body: Container(
+        child: Column(
           children: [
             Container(
-              color: Colors.red,
-              height: 300,
-               width: 300,),
-            Positioned(
-              top: -40,
-              left: 100,
-              child: Container(
-                
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  shape: BoxShape.circle
-                ),
-              
-                height: 100,
-                 width: 100,
-              ),
-            ), 
+              child: Text("Selam"),
+              color: Colors.amber,
+              height: 100,
+              width: 100,
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text("Selam"),
+            ),
           ],
         ),
-      )
+      ),
+    );
+  }
+
+  Row flexibleOrnek() {
+    return Row(
+      children: [
+        Flexible(
+          child: Container(
+            height: 120,
+            width: 400,
+            color: Colors.red,
+          ),
+        ),
+
+        Flexible(
+          child: Container(
+            height: 120,
+            width: 100,
+            color: Colors.green,
+          ),
+        ),
+
+        Flexible(
+          child: Container(
+            height: 120,
+            width: 120,
+            color: Colors.yellow,
+          ),
+        ),
+        Flexible(
+          child: Container(
+            height: 120,
+            width: 120,
+            color: Colors.brown,
+          ),
+        ),
+        Flexible(
+          child: Container(
+            height: 120,
+            width: 120,
+            color: Colors.orange,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row ExpandedOrnek() {
+    return Row(
+      children: [
+        Expanded(
+          flex: 3,
+          child: Container(
+            color: Colors.amber,
+            child: Text("Resim Alanı"),
+            height: 140,
+          ),
+        ),
+
+        Expanded(
+          flex: 5,
+          child: Container(
+            color: Colors.blue,
+            child: Text("title alanı"),
+            height: 140,
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            color: Colors.green,
+            child: Text("İcon Alanı"),
+            height: 140,
+          ),
+        ),
+      ],
     );
   }
 }
 
 /*
+39)
+38)SliverGrid
+37)Dimanik SliverFixedExtentList
+36)SliverPadding
+35)Dimanik SliverList (SliverChildBuilderDelegated)
+34)Statik SliverList ((SliverChildDelegated))
+33)CustomScrollView ve SliverAppBar
+32)GestureDetector
+31)Gridview.builder => SliverGridDelegateWithFixedCrossAxisCount
+30)Gridview.builder => SliverGridDelegateWithMaxCrossAxisExtend
+29)Gridview.extent
+28)GridView.count
+27)List Tasarım Sorunları
+26)ListView.seperatorBuilder
+25)ListView.builder
+24)Statik Listview ve List.generated
+23)SingleChildScrrolView
+22)Card ve ListTile
+21)AppBar:
+20)PopUp Menü
+19)DropDownbutton
+18)Visbility ve Opacity
+17)Butonlar
+16)FadenImage, intrinsicheight, placeholder
+15)Resim Ekleme:
+14)BuildContext
+13)Statefull ve setstate:
+
+12)MaterialApp ve Theme:
+MaterialApp(
+      theme: ThemeData(
+        textTheme: TextTheme(
+          displaySmall: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        //brightness: Brightness.dark,
+        elevatedButtonTheme:
+            ElevatedButtonThemeData(
+              style:
+                  ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Colors
+                            .pink
+                            .shade200,
+                    foregroundColor:
+                        Colors.brown,
+                  ),
+            ),
+        primarySwatch: Colors.pink,
+        useMaterial3: false,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: TasarimTekrar(),
+    );
+Bir uygulamanın kök dizininde bulunan ilk yapısıdır.
+
+11)Padding:Bir widget parent ı ile olan boşluğu belirler. 
+
+10)Spacer: Objeler arasına oluşabilecek en çok boşluğu bırakarak kaydırır.
+
+9)SizedBox:İki görevi vardır. Birincisi boşluk bırakma ikincisi olçüleri olmayan widgetları boyutlandırma:
+
+Container(
+       
+        child: Column(
+          children: [
+            SizedBox(height: 30,),
+            Row(
+          children: [
+            Container(
+              height: 100,
+              width: 100,
+              color: Colors.blue,
+            ),
+            SizedBox(width: 50,),
+             Container(
+              height: 100,
+              width: 100,
+              color: Colors.yellow,
+            ),
+          ],
+        ),
+        SizedBox(height: 25,),
+          SizedBox(
+            height: 65,
+            width: 200,
+            child: Card(
+              color: Colors.green,
+              child: Text("Selam"),
+            ),
+          )
+          ]
+        ),
+    )
+
+
+8)Positioned: Genellikle stack içindeki çocukları konumlandırmak için kullanılır. :
+
+Stack(
+          alignment: AlignmentDirectional.center,
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              height: 300,
+              width: 400,
+              color: Colors.pink,
+            ),
+             Positioned(
+              top: -40,
+               child: Container(
+               decoration: BoxDecoration(
+                 shape: BoxShape.circle,
+                 color: Colors.green,
+               ),
+               height: 100,
+               width: 100,
+               ),
+             )
+          ],
+        ),
+      )
+
+7)Align: Eğer bir widget ı parent ına göre konumlandırmak istersek kullanılır aşağıdaki örnekte container ı parent ı olan Scaffold a göre bottom center da konumlandırdık:
+
+ Align(
+      alignment: Alignment.bottomCenter,
+        child: Container(
+          alignment: Alignment.bottomCenter,
+          height: 140,
+          width: 430,
+          color: Colors.amber,
+          child: Text("Selam"),
+        ),
+      ),
+
+
+6)Flexible: Expanded gibi taşma sorunlarında kullanılan diğer bir yapıdır. Flexible eğer taşma yoksa verilen değerleri uygular. Eğer taşma yoksa daima verilen ölçü önemlidir. Flex taşma yoksa çalışmaz. Eğer taşma varsa ölçüler devre dışı kalır sadece flex yönetir.
+
+Expanded ile flex arasındaki en önemli fark expanded i daime flex yönetir ve boşlukları doldurur flexible ise taşma olmadığı sürece boşlukları doldurmaz ölçüleri dinler taşma varsa flex devreye girer.
+
+
+5)Expanded: Bu yapı hem ekranı responsive paylaşmaya hem de taşma hatalarını gidermeye yarar. Kendisi alanı aralarında paylaştırır. flex özelliği ile oranlama yapılır. Bu ifade çocuklar alan yapılarda kullanılır(row, column)
+
+Container(
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: 125,
+                width: 175,
+                color: Colors.yellow,
+              ),
+            ),
+          Expanded(
+              child: Container(
+                height: 125,
+                width: 175,
+                color: Colors.blue,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: 125,
+                width: 175,
+                color: Colors.green,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: 125,
+                width: 175,
+                color: Colors.brown,
+              ),
+            ),
+
+          ],
+        ),
+      )
+
+      Alan paylaşmı için kullanılır.
+
 4)Stack: Üst üste yapılar kullanmak için vardır:
 
 children ve clipBehavior özellikleri vardır. Clip.none dediğinizde artık o eleman stack i terk edebilir. tasarım da önemlidir.
