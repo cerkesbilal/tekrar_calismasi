@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tekrar_calismasi/models/ogrenci.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,47 +10,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        textTheme: TextTheme(
-          displaySmall: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        //brightness: Brightness.dark,
-        elevatedButtonTheme:
-            ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                textStyle: TextStyle(
-                  fontSize: 24,
-                ),
-                padding:
-                    EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 25,
-                    ),
-                backgroundColor: Colors
-                    .pink
-                    .shade200,
-                foregroundColor:
-                    Colors.white,
-              ),
-            ),
-        textButtonTheme:
-            TextButtonThemeData(
-              style: TextButton.styleFrom(
-                textStyle: TextStyle(
-                  fontSize: 24,
-                ),
-                padding:
-                    EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 25,
-                    ),
-              ),
-            ),
-        primarySwatch: Colors.pink,
-        useMaterial3: false,
-      ),
       debugShowCheckedModeBanner: false,
       home: TasarimTekrar(),
     );
@@ -67,48 +27,344 @@ class TasarimTekrar
 
 class _TasarimTekrarState
     extends State<TasarimTekrar> {
-  bool isVisibility = true;
+  //seçilen şehri tutacağım bir değişkene ihtiyacım var.
+  String secilenDeger = "";
+  List<String> iller = [
+    "ADANA",
+    "ADIYAMAN",
+    "AFYONKARAHİSAR",
+    "AĞRI",
+    "AMASYA",
+    "ANKARA",
+    "ANTALYA",
+    "ARTVİN",
+    "AYDIN",
+    "BALIKESİR",
+    "BİLECİKK",
+    "BİNGÖL",
+    "BİTLİS",
+    "BOLU",
+    "BURDUR",
+    "BURSA",
+    "ÇANAKKALE",
+    "ÇANKIRI",
+    "ÇORUM",
+    "DENİZLİ",
+    "DİYARBAKIR",
+    "EDİRNE",
+    "ELAZIĞ",
+    "ERZİNCAN",
+    "ERZURUM",
+    "ESKİŞEHİR",
+    "GAZİANTEP",
+    "GİRESUN",
+    "GÜMÜŞHANE",
+    "HAKKARİ",
+    "HATAY",
+    "ISPARTA",
+    "MERSİN",
+    "İSTANBUL",
+    "İZMİR",
+    "KARS",
+    "KASTAMONU",
+    "KAYSERİ",
+    "KIRKLARELİ",
+    "KIRŞEHİR",
+    "KOCAELİ",
+    "KONYA",
+    "KÜTAHYA",
+    "MALATYA",
+    "MANİSA",
+    "KAHRAMANMARAŞ",
+    "MARDİN",
+    "MUĞLA",
+    "MUŞ",
+    "NEVŞEHİR",
+    "NİĞDE",
+    "ORDU",
+    "RİZE",
+    "SAKARYA",
+    "SAMSUN",
+    "SİİRT",
+    "SİNOP",
+    "SİVAS",
+    "TEKİRDAĞ",
+    "TOKAT",
+    "TRABZON",
+    "TUNCELİ",
+    "ŞANLIURFA",
+    "UŞAK",
+    "VAN",
+    "YOZGAT",
+    "ZONGULDAK",
+    "AKSARAY",
+    "BAYBURT",
+    "KARAMAN",
+    "KIRIKKALE",
+    "BATMAN",
+    "ŞIRNAK",
+    "BARTIN",
+    "ARDAHAN",
+    "IĞDIR",
+    "YALOVA",
+    "KARABüK",
+    "KİLİS",
+    "OSMANİYE",
+    "DÜZCE",
+  ];
+  List<String> menuler = [
+    "Home",
+    "Settings",
+    "Profile",
+    "Basket",
+  ];
+
+  List<Ogrenci>
+  tumOgrenciler = List.generate(
+    5000,
+    (index) => Ogrenci(
+      id: index + 1,
+      isim: "Öğrenci adı: ${index + 1}",
+      soyisim: "Soyisim: ${index + 1}",
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Tasarım Tekrar",
-          style: Theme.of(
-            context,
-          ).textTheme.displaySmall,
+      appBar: AppBar(),
+      body: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.green,
+            width: 5,
+          ),
         ),
-        backgroundColor: Colors.brown,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.center,
+        child: GridView.count(
+          crossAxisSpacing:
+              20, //sütünlar arası boşluk
+          mainAxisSpacing:
+              40, //satırlar arası boşluk
+          padding: EdgeInsets.all(12),
+          crossAxisCount: 2,
           children: [
-            Opacity(
-              opacity: isVisibility
-                  ? 1
-                  : 0,
-              child: Container(
-                height: 180,
-                width: 180,
-                color: Colors.red,
-              ),
+            sabitGridViewEleman(
+              Colors.red,
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  isVisibility =
-                      !isVisibility;
-                });
-              },
-              child: Text(
-                "Görünür Yap",
-              ),
+            sabitGridViewEleman(
+              Colors.green,
+            ),
+            sabitGridViewEleman(
+              Colors.brown,
+            ),
+            sabitGridViewEleman(
+              Colors.yellow,
+            ),
+            sabitGridViewEleman(
+              Colors.blue,
+            ),
+            sabitGridViewEleman(
+              Colors.purple,
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Column listviewSorunlari() {
+    return Column(
+      children: [
+        Text("Listview başladı"),
+        Expanded(
+          flex: 8,
+          child: ListView(
+            children: [
+              Container(
+                height: 200,
+                color: Colors
+                    .orange
+                    .shade300,
+              ),
+              SizedBox(height: 10),
+              Container(
+                height: 200,
+                color: Colors
+                    .blue
+                    .shade300,
+              ),
+              SizedBox(height: 10),
+              Container(
+                height: 200,
+                color: Colors
+                    .brown
+                    .shade300,
+              ),
+              SizedBox(height: 10),
+              Container(
+                height: 200,
+                color: Colors
+                    .blue
+                    .shade300,
+              ),
+            ],
+          ),
+        ),
+        Text("Listview bitti"),
+      ],
+    );
+  }
+
+  ListView speratretorWidget() {
+    return ListView.separated(
+      itemCount: tumOgrenciler.length,
+      separatorBuilder:
+          (context, index) {
+            return (index + 1) % 4 == 0
+                ? Divider(
+                    color: Colors.green,
+                    thickness: 3,
+                  )
+                : Container();
+          },
+      itemBuilder: (context, index) {
+        Ogrenci ogr =
+            tumOgrenciler[index];
+        return veriAlanSabitEleman(ogr);
+      },
+    );
+  }
+
+  SizedBox veriAlanSabitEleman(
+    Ogrenci ogr,
+  ) {
+    return SizedBox(
+      height: 90,
+      child: Row(
+        children: [
+          Expanded(
+            child: Card(
+              color:
+                  Colors.pink.shade100,
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(
+                      10,
+                    ),
+              ),
+              child: Align(
+                alignment:
+                    Alignment.center,
+                child: ListTile(
+                  onTap: () {},
+                  leading: CircleAvatar(
+                    child: Text(
+                      ogr.id.toString(),
+                    ),
+                  ),
+                  title: Text(ogr.isim),
+                  subtitle: Text(
+                    ogr.soyisim,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  SizedBox sabitEleman() {
+    return SizedBox(
+      height: 90,
+      child: Row(
+        children: [
+          Expanded(
+            child: Card(
+              color: Colors
+                  .orange
+                  .shade100,
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(
+                      10,
+                    ),
+              ),
+              child: Align(
+                alignment:
+                    Alignment.center,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.wb_sunny,
+                    size: 36,
+                    color: Colors.white,
+                  ),
+                  title: Text("28 °C"),
+                  subtitle: Text(
+                    "Ankara",
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget sabitGridViewEleman(
+    Color bgColor,
+  ) {
+    return Container(
+      height: 150,
+      color: bgColor,
+      child: Text("Deneme"),
+    );
+  }
+}
+
+class OgrDetay extends StatelessWidget {
+  final Ogrenci ogr;
+  const OgrDetay({
+    super.key,
+    required this.ogr,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          height: 300,
+          width: 300,
+          color: Colors.grey.shade200,
+          child: Column(
+            children: [
+              Text(
+                "Öprenci id: ${ogr.id}",
+              ),
+              SizedBox(height: 8),
+              Text(
+                "Ögrenci isim: ${ogr.isim}",
+              ),
+              SizedBox(height: 8),
+              Text(
+                "Öprenci id: ${ogr.soyisim}",
+              ),
+              SizedBox(height: 8),
+            ],
+          ),
         ),
       ),
     );
@@ -126,17 +382,462 @@ class _TasarimTekrarState
 32)GestureDetector
 31)Gridview.builder => SliverGridDelegateWithFixedCrossAxisCount
 30)Gridview.builder => SliverGridDelegateWithMaxCrossAxisExtend
+
 29)Gridview.extent
+Bu çeşit sabit bir veri çeşidir. burda ki fark ekran tasarımında ki farktır.Burda ise yatayda gelecek olan elemanı boyutuna yerleştirir. 
+
+
 28)GridView.count
+Bu çeşit sabit bir veri çeşidir. burda ki fark ekran tasarımında ki farktır. Burda ekrana yatayda kaç tane eleman geleceğini söyleriz:
+
+
+ GridView.count(
+          crossAxisSpacing:
+              20, //sütünlar arası boşluk
+          mainAxisSpacing:
+              40, //satırlar arası boşluk
+          padding: EdgeInsets.all(12),
+          crossAxisCount: 2,
+          children: [
+            sabitGridViewEleman(
+              Colors.red,
+            ),
+            sabitGridViewEleman(
+              Colors.green,
+            ),
+            sabitGridViewEleman(
+              Colors.brown,
+            ),
+            sabitGridViewEleman(
+              Colors.yellow,
+            ),
+            sabitGridViewEleman(
+              Colors.blue,
+            ),
+            sabitGridViewEleman(
+              Colors.purple,
+            ),
+          ],
+        ),
+
 27)List Tasarım Sorunları
+-Ben ekrana boş bir container oluşturduğumuzda burada ne olur parent ı kadar yayılır:
+
+Container(
+        decoration: BoxDecoration(
+          color: Colors.red,
+          border: Border.all(
+            color: Colors.green,
+            width: 5,
+          ),
+        ),
+      ),
+Peki ben container child ına listview versem ne olacak? 
+
+Listview tüm alanı kaplar çünkü parent i olan container tüm alanda.
+
+Listview içine çocuğunu alsada yine de parent i kadar yer kaplamaya devam eder:
+
+child: ListView(
+          children: [
+            Container(
+              height: 200,
+              color: Colors
+                  .orange
+                  .shade300,
+            ),
+          ],
+        ),
+
+ Eğer paranet ından daha büyük bir yapıya dönüşürse de scroll özelliğini devreye sokar. Yani container ile arasında çok temel bir fark var. 
+
+ Ama ben şunu diyebilir hey listview sende çocukların kadar yer kapla :
+
+  shrinkWrap: true, 
+
+ Listview in bir boyut sınırlandırması olmadığı için column içine alırsanız patlama yapacaktır eleman ekleyince altına ya da üstüne. Bunu çözmenin yolu listview i expanded içine almaktır.     
+
 26)ListView.seperatorBuilder
+
+ListView.separated(
+          itemCount:
+              tumOgrenciler.length,
+          separatorBuilder:
+              (context, index) {
+                return (index + 1) %
+                            4 ==
+                        0
+                    ? Divider(
+                        color: Colors
+                            .green,
+                        thickness: 3,
+                      )
+                    : Container();
+              },
+          itemBuilder: (context, index) {
+            Ogrenci ogr =
+                tumOgrenciler[index];
+            return veriAlanSabitEleman(
+              ogr,
+            );
+          },
+        ),
+
 25)ListView.builder
+
+ ListView.builder(
+          itemCount:
+              tumOgrenciler.length,
+          itemBuilder: (context, index) {
+            Ogrenci ogr =
+                tumOgrenciler[index];
+            return veriAlanSabitEleman(
+              ogr,
+            );
+          },
+        ),
+
+        Tıklanma tasarımı:
+SizedBox veriAlanSabitEleman(
+    Ogrenci ogr,
+  ) {
+    return SizedBox(
+      height: 90,
+      child: Row(
+        children: [
+          Expanded(
+            child: Card(
+              color:
+                  Colors.pink.shade100,
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(
+                      10,
+                    ),
+              ),
+              child: Align(
+                alignment:
+                    Alignment.center,
+                child: ListTile(
+                  onTap: () {
+                    Navigator.of(
+                      context,
+                    ).push(
+                      MaterialPageRoute(
+                        builder:
+                            (
+                              context,
+                            ) => OgrDetay(
+                              ogr: ogr,
+                            ),
+                      ),
+                    );
+                  },
+                  leading: CircleAvatar(
+                    child: Text(
+                      ogr.id.toString(),
+                    ),
+                  ),
+                  title: Text(ogr.isim),
+                  subtitle: Text(
+                    ogr.soyisim,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+Detay Sayfası:
+
+
+
+
+
 24)Statik Listview ve List.generated
+Listview eğer bir yapıyı tekrar tekrar yazdırıyorsanız kullanmalıyız. Bu sabit olduğu için bununla farklı sayfa tasarımlarını da listeyebiliriz.  
+
+Örnek:
+
+Bir tane öğrenci sınıfı oluşturdum:
+
+class Ogrenci {
+  final int id;
+  final String isim;
+  final String soyisim;
+
+  Ogrenci({
+    required this.id,
+    required this.isim,
+    required this.soyisim,
+  });
+}
+
+Daha sonra veri grubumuz olsun diye liste sınıfının generate metodunu kullanarak veri grubu oluşturdum örnekte içinde 5000 tane veri tutan tüm öğrenciler listesi oluştur:
+
+List<Ogrenci>
+  tumOgrenciler = List.generate(
+    5000,
+    (index) => Ogrenci(
+      id: index + 1,
+      isim: "Öğrenci adı: ${index + 1}",
+      soyisim: "Soyisim: ${index + 1}",
+    ),
+  );
+
+  Daha sonra bunu list isteyen listview kısmında kullanmam lazım ama bir sorunum var? Listview benden widget türünde bir liste isterken bende öğrenci türünde liste var. listenin türünü değiştirmek için map metodunu kullanmamız gerekiyor:
+
+   ListView(
+          children: tumOgrenciler
+              .map(
+                (
+                  Ogrenci oankiOgrenci,
+                ) =>
+                    veriAlanSabitEleman(
+                      oankiOgrenci,
+                    ),
+              )
+              .toList(),
+        ),
+
+  verialansabiteleman metodumuz bizden öğrenci parametresi istiyor bizde bunu mapten alarak ona gönderiyor ekrana yazdırıyoruz:
+
+  SizedBox veriAlanSabitEleman(
+    Ogrenci ogr,
+  ) {
+    return SizedBox(
+      height: 90,
+      child: Row(
+        children: [
+          Expanded(
+            child: Card(
+              color: Colors
+                  .orange
+                  .shade100,
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(
+                      10,
+                    ),
+              ),
+              child: Align(
+                alignment:
+                    Alignment.center,
+                child: ListTile(
+                  leading: CircleAvatar(
+                    child: Text(
+                      ogr.id.toString(),
+                    ),
+                  ),
+                  title: Text(ogr.isim),
+                  subtitle: Text(
+                    ogr.soyisim,
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+
 23)SingleChildScrrolView
-22)Card ve ListTile
+Column ya da row yapılarının taşmasını önlemek için kullanılır. 
+
+22)Card ve ListTile:
+
+ SizedBox(
+              height: 90,
+              width: 420,
+              child: Card(
+                color: Colors
+                    .orange
+                    .shade100,
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(
+                        10,
+                      ),
+                ),
+                child: Align(
+                  alignment:
+                      Alignment.center,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.wb_sunny,
+                      size: 36,
+                      color:
+                          Colors.white,
+                    ),
+                    title: Text(
+                      "28 °C",
+                    ),
+                    subtitle: Text(
+                      "Ankara",
+                    ),
+                    trailing: Icon(
+                      Icons
+                          .arrow_forward,
+                      color:
+                          Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
 21)AppBar:
-20)PopUp Menü
+
+AppBar(
+        centerTitle: false,
+        leading: Icon(Icons.menu),
+        title: Column(
+          children: [
+            Text(
+              "Tasarım Tekrar",
+              style: Theme.of(
+                context,
+              ).textTheme.displaySmall,
+            ),
+            Text(
+              "Tasarım Tekrar",
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.pink,
+      ),
+
+20)PopUp Menü: Genellikle appbar ın actions kısmına tanımlanır. açılır bir menüdür.
+
+actions: [
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return menuler
+                  .map(
+                    (
+                      String gelenMenu,
+                    ) => PopupMenuItem(
+                      child: Text(
+                        gelenMenu,
+                      ),
+                      value: gelenMenu,
+                    ),
+                  )
+                  .toList();
+            },
+            onSelected: (value) {
+              secilenDeger = value;
+            },
+          ),
+        ],
+
+
+
 19)DropDownbutton
+-Mutlaka statefull widget içerisinde tanımlanmalı. 
+-Açılır bir yapıdadır. Formlarda sık sık kullanılır örnek şehir seçimi. 
+-Burdan aldığımız veriyi başka yerlerde kullanabilmek için global alana String türünde bir değişken tanımlıyorum ve bunun ilk değerine null atıyorum:
+
+String? secilenSehir = null;
+
+-String değeri "" yaparsanız patlar buraya ya var olan value lerden biri yazmalısınız ya da null yazmalısınız null yazarsanı dropdownbutton ın hint özelliğinde vereceğiniz text i direk varsayılan yazı olarak gösterir.
+
+-Eğer ekran değişimini görmek istiyorsanuz onchange işlemini setstate ile yapmalısınız ve dropdownbutton un value değerine başta tanımladığınız değişkeni vermelisiniz:
+
+DropdownButton<String>(
+          value: secilenSehir,
+          hint: Text("Şehir seçiniz"),
+          items: [
+            DropdownMenuItem(
+              //Görünen kısım
+              child: Text(
+                "Ankara Şehri",
+              ),
+              //Arka planda alınan kısım
+              value: "ankara",
+            ),
+
+            DropdownMenuItem(
+              //Görünen kısım
+              child: Text(
+                "İstanbul Şehri",
+              ),
+              //Arka planda alınan kısım
+              value: "istanbul",
+            ),
+
+            DropdownMenuItem(
+              //Görünen kısım
+              child: Text(
+                "Bursa Şehri",
+              ),
+              //Arka planda alınan kısım
+              value: "bursa",
+            ),
+          ],
+          onChanged: (secilenDeger) {
+            setState(() {
+              secilenSehir =
+                  secilenDeger;
+            });
+          },
+        ),
+----------------------------------------
+DropdownButton<String>(
+          /*underline: Divider(
+            color: Colors.black,
+            thickness: 3,
+          ),*/
+          /*style: TextStyle(
+            color: Colors.red,
+            fontSize: 18,
+          ),*/
+          /* icon: Icon(
+            Icons.arrow_downward,
+          ),*/
+          value: secilenSehir,
+          hint: Text("Şehir seçiniz"),
+          items: iller
+              .map(
+                (String oankiIl) =>
+                    DropdownMenuItem(
+                      child: Text(
+                        oankiIl,
+                      ),
+                      value: oankiIl,
+                    ),
+              )
+              .toList(),
+          onChanged: (secilenDeger) {
+            setState(() {
+              secilenSehir =
+                  secilenDeger;
+            });
+          },
+        ),
+
 
 
 18)Visbility ve Opacity
