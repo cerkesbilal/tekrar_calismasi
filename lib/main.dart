@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:tekrar_calismasi/models/ogrenci.dart';
 
@@ -132,43 +134,222 @@ class _TasarimTekrarState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.green,
-            width: 5,
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            surfaceTintColor:
+                Colors.white,
+            floating: true,
+            pinned: true,
+            snap: true,
+            //title: Text("SliverAppBar"),
+            backgroundColor:
+                Colors.white,
+            expandedHeight: 300,
+            foregroundColor:
+                Colors.white,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(
+                "SliverappBar",
+              ),
+              //centerTitle: false,
+              background: Image.network(
+                "https://static3.depositphotos.com/1006065/229/i/450/depositphotos_2299392-stock-photo-cat.jpg",
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
-        child: GridView.count(
-          crossAxisSpacing:
-              20, //sütünlar arası boşluk
-          mainAxisSpacing:
-              40, //satırlar arası boşluk
-          padding: EdgeInsets.all(12),
-          crossAxisCount: 2,
-          children: [
-            sabitGridViewEleman(
-              Colors.red,
+
+          sliverListDinamikOrnek(),
+
+          sliverExtendListOrnek(),
+
+          SliverPadding(
+            padding:
+                EdgeInsets.symmetric(
+                  vertical: 30,
+                ),
+            sliver: SliverGrid(
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+              delegate:
+                  SliverChildListDelegate([
+                    sabitGridViewEleman(
+                      Colors.red,
+                    ),
+                    sabitGridViewEleman(
+                      Colors.blue,
+                    ),
+                    sabitGridViewEleman(
+                      Colors.green,
+                    ),
+                    sabitGridViewEleman(
+                      Colors.yellow,
+                    ),
+                    sabitGridViewEleman(
+                      Colors.purple,
+                    ),
+                    sabitGridViewEleman(
+                      Colors.teal,
+                    ),
+                  ]),
             ),
-            sabitGridViewEleman(
-              Colors.green,
-            ),
-            sabitGridViewEleman(
-              Colors.brown,
-            ),
-            sabitGridViewEleman(
-              Colors.yellow,
-            ),
-            sabitGridViewEleman(
-              Colors.blue,
-            ),
-            sabitGridViewEleman(
-              Colors.purple,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
+    );
+  }
+
+  SliverPadding
+  sliverExtendListOrnek() {
+    return SliverPadding(
+      padding:
+          EdgeInsetsGeometry.symmetric(
+            vertical: 25,
+          ),
+      sliver: SliverFixedExtentList(
+        itemExtent: 150,
+        delegate:
+            SliverChildBuilderDelegate(
+              childCount: 10,
+              (context, index) {
+                return dinamikEleman(
+                  index,
+                );
+              },
+            ),
+      ),
+    );
+  }
+
+  SliverPadding
+  sliverListDinamikOrnek() {
+    return SliverPadding(
+      padding: EdgeInsetsGeometry.all(
+        10,
+      ),
+      sliver: SliverList(
+        delegate:
+            SliverChildBuilderDelegate(
+              childCount: 20,
+              (context, index) {
+                return dinamikEleman();
+              },
+            ),
+      ),
+    );
+  }
+
+  Color rastgeleRenkUret() {
+    return Color.fromARGB(
+      Random().nextInt(255),
+      Random().nextInt(255),
+      Random().nextInt(255),
+      Random().nextInt(255),
+    );
+  }
+
+  Widget dinamikEleman([
+    int index = 0,
+  ]) {
+    return Container(
+      color: rastgeleRenkUret(),
+      width: 200,
+      height: 75,
+      child: Text(
+        "Eleman ${index + 1}",
+      ),
+    );
+  }
+
+  GridView
+  gridviewDinamikExtentOrnek() {
+    return GridView.builder(
+      itemCount: 8,
+      gridDelegate:
+          SliverGridDelegateWithMaxCrossAxisExtent(
+            //mainAxisExtent: 130,
+            //crossAxisSpacing: 25,
+            //mainAxisSpacing: 20,
+            maxCrossAxisExtent: 220,
+          ),
+      itemBuilder: (context, index) {
+        return dinamikGridElemani(
+          index,
+        );
+      },
+    );
+  }
+
+  Widget dinamikGridElemani(int index) {
+    return GestureDetector(
+      onTap: () {
+        debugPrint(
+          "tek tıklama: ${index + 1}",
+        );
+      },
+      onDoubleTap: () {
+        debugPrint(
+          "Çift tıklama: ${index + 1}",
+        );
+      },
+      onLongPress: () {
+        debugPrint(
+          "Uzun Süre: ${index + 1}",
+        );
+      },
+      onHorizontalDragStart: (e) {
+        debugPrint("başlangıç: $e");
+      },
+      onHorizontalDragEnd: (e) {
+        debugPrint("bitiş: $e");
+      },
+      child: Container(
+        height: 75,
+        child: Text(
+          "Eleman ${index + 1}",
+        ),
+        color:
+            Colors.teal[(((index + 1) %
+                        8) +
+                    1) *
+                100],
+      ),
+    );
+  }
+
+  GridView gridviewExtendOrnek() {
+    return GridView.extent(
+      maxCrossAxisExtent: 379,
+      padding: EdgeInsets.all(10),
+      crossAxisSpacing:
+          20, //sütünlar arası(yatay)
+      mainAxisSpacing:
+          40, //satırlar arası(dikey)
+      children: [
+        sabitGridViewEleman(Colors.red),
+        sabitGridViewEleman(
+          Colors.green,
+        ),
+        sabitGridViewEleman(
+          Colors.brown,
+        ),
+        sabitGridViewEleman(
+          Colors.blue,
+        ),
+        sabitGridViewEleman(
+          Colors.black,
+        ),
+        sabitGridViewEleman(
+          Colors.grey,
+        ),
+        sabitGridViewEleman(
+          Colors.purple,
+        ),
+      ],
     );
   }
 
@@ -328,6 +509,7 @@ class _TasarimTekrarState
   ) {
     return Container(
       height: 150,
+      width: 500,
       color: bgColor,
       child: Text("Deneme"),
     );
@@ -377,17 +559,235 @@ class OgrDetay extends StatelessWidget {
 37)Dimanik SliverFixedExtentList
 36)SliverPadding
 35)Dimanik SliverList (SliverChildBuilderDelegated)
-34)Statik SliverList ((SliverChildDelegated))
-33)CustomScrollView ve SliverAppBar
-32)GestureDetector
-31)Gridview.builder => SliverGridDelegateWithFixedCrossAxisCount
-30)Gridview.builder => SliverGridDelegateWithMaxCrossAxisExtend
 
-29)Gridview.extent
+ SliverList(
+            delegate: SliverChildBuilderDelegate(
+              childCount: 20,
+              (context, index) {
+                return Container(
+                  height: 75,
+                  child: Text(
+                    "Eleman ${index + 1}",
+                  ),
+                  color: Colors.teal[(((index +
+                   1) % 8) +1) * 100],
+                );
+              },
+            ),
+          ),
+
+
+34)Statik SliverList ((SliverChildDelegated))
+
+33)CustomScrollView ve SliverAppBar
+
+A)CustomScrollView:
+
+-Yıkarı aşağıya yaptığımda collaps yani küçülüp büyüyebilen toolbar verir. 
+
+-CustomScrollView içerisine sadece sliver sınıfından türemiş ifadeler alır.
+
+-SliverappBar, SliverList, SliverGrid, SliverPadding
+
+-CustomScrollView tasarlarsak Listview oluşturacaksak SliverList, Gridview oluşturacaksak SliverGrid, eğer AppBar oluşturacaksak SliverAppBar kullanıcaz.
+
+-Tüm elemanları slivers parametresi olan liste içine yazıcaz yani çocuklarına
+
+A1)SliverappBar: En başta oluşur. Boyut verebiliriz. Diğer appbar kullanılmamalı.
+
+Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text("SliverAppBar"),
+            backgroundColor: Colors.red,
+            expandedHeight: 300,
+            foregroundColor:
+                Colors.white,
+          ),
+
+        ],
+      ),
+    );
+
+
+    A2)SliverList: CustomScrollView de listview mantığı ile çalışan liste oluşturmak için kullanılır. Statik ve dinamik hali vardır:
+
+    -Statik kullanımı
+
+    Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text("SliverAppBar"),
+            backgroundColor: Colors.red,
+            expandedHeight: 300,
+            foregroundColor:
+                Colors.white,
+          ),
+
+          SliverList(
+            delegate:
+                SliverChildListDelegate(
+                  [
+                    sabitEleman(),
+                    sabitEleman(),
+                    sabitEleman(),
+                    sabitEleman(),
+                    sabitEleman(),
+                    sabitEleman(),
+                    sabitEleman(),
+                    sabitEleman(),
+                    sabitEleman(),
+                    sabitEleman(),
+                  ],
+                ),
+          ),
+        ],
+      ),
+    );
+
+    Artık sliverAppBar yukarı kayıyor bunun anlatıman geri dönebilir:
+
+    SliverAppBar(
+            floating: true,
+            pinned: true,
+            snap: true,
+            //title: Text("SliverAppBar"),
+            backgroundColor: Colors.red,
+            expandedHeight: 300,
+            foregroundColor:
+                Colors.white,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(
+                "SliverappBar",
+              ),
+              //centerTitle: false,
+              background: Image.network(
+                "https://static3.depositphotos.com/1006065/229/i/450/depositphotos_2299392-stock-photo-cat.jpg",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+
+
+
+32)GestureDetector: Tıklaması olmayan yapılar için tıklanma özelliği verir:
+
+GestureDetector(
+      onTap: () {
+        debugPrint(
+          "tek tıklama: ${index + 1}",
+        );
+      },
+      onDoubleTap: () {
+        debugPrint(
+          "Çift tıklama: ${index + 1}",
+        );
+      },
+      onLongPress: () {
+        debugPrint(
+          "Uzun Süre: ${index + 1}",
+        );
+      },
+      onHorizontalDragStart: (e) {
+        debugPrint("başlangıç: $e");
+      },
+      onHorizontalDragEnd: (e) {
+        debugPrint("bitiş: $e");
+      },
+      child: Container(
+
+31)Gridview.builder:
+Dinamiş çalışan ve bellek dostu olan yapı budur. girdDelegate diye parametresi vardır.
+
+31a)Gridview.builder => SliverGridDelegateWithFixedCrossAxisCount:
+
+Gridview dinamik elemanlarını yatay eksende kaçtane eleman olsun şeklinde üyelerini(delegate) yerleştirir.
+
+Üç tane önemli parametresi vardır. 
+itemCount: kaç eleman döneceğini veririz.
+gridDelegate: Elemanların nasıl yerleşeceğini belirler. Biz burda count a göre yaptığımız için şunu seçiyoruz:
+
+SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+ Bizden zorunlu olarak count istiyor işte bu yerleşimi belirleyen veri.
+
+itemBuilder:
+ Üçün parametresi ise itemBuilder. Vereceğimiz elemanları ekrana çizen yapıdır. context ve index değeri alır. dinamik olmasını sağlayan şey işte burdaki index yapısıdır. Arka planda verdiğimiz itemCount kadar gridview i döndürür bu da yapıyı dinamik hale getirir.           
+
+
+GridView.builder(
+          itemCount: 10,
+          padding: EdgeInsets.all(10),
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+          itemBuilder: (context, index) {
+            return dinamikGridElemani(
+              index,
+            );
+          },
+        ),
+
+30b)Gridview.builder => SliverGridDelegateWithMaxCrossAxisExtend: Tüm parametre tarzları count ile aynı sadece gridDelegated ifadesinde değişiklik yapıyoruz çünkü artık sayıya değil boyuta göre sıralanacaktır
+:
+ SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 220,)
+
+GridView.builder(
+          padding: EdgeInsets.all(10),
+          itemCount: 8,
+          gridDelegate:
+              SliverGridDelegateWithMaxCrossAxisExtent(
+                crossAxisSpacing: 25,
+                mainAxisSpacing: 20,
+                maxCrossAxisExtent: 220,
+              ),
+          itemBuilder: (context, index) {
+            return dinamikGridElemani(
+              index,
+            );
+          },
+        ),
+29b)Gridview.extent
 Bu çeşit sabit bir veri çeşidir. burda ki fark ekran tasarımında ki farktır.Burda ise yatayda gelecek olan elemanı boyutuna yerleştirir. 
 
+GridView.extent(
+        maxCrossAxisExtent: 379,
+        padding: EdgeInsets.all(10),
+        crossAxisSpacing:
+            20, //sütünlar arası(yatay)
+        mainAxisSpacing:
+            40, //satırlar arası(dikey)
+        children: [
+          sabitGridViewEleman(
+            Colors.red,
+          ),
+          sabitGridViewEleman(
+            Colors.green,
+          ),
+          sabitGridViewEleman(
+            Colors.brown,
+          ),
+          sabitGridViewEleman(
+            Colors.blue,
+          ),
+          sabitGridViewEleman(
+            Colors.black,
+          ),
+          sabitGridViewEleman(
+            Colors.grey,
+          ),
+          sabitGridViewEleman(
+            Colors.purple,
+          ),
+        ],
+      );
 
-28)GridView.count
+28)a)GridView.count
 Bu çeşit sabit bir veri çeşidir. burda ki fark ekran tasarımında ki farktır. Burda ekrana yatayda kaç tane eleman geleceğini söyleriz:
 
 
@@ -419,6 +819,7 @@ Bu çeşit sabit bir veri çeşidir. burda ki fark ekran tasarımında ki farkt�
             ),
           ],
         ),
+28b)Gridview.extent : Burdaki sıralamayı child in ölçüsü belirler.        
 
 27)List Tasarım Sorunları
 -Ben ekrana boş bir container oluşturduğumuzda burada ne olur parent ı kadar yayılır:
@@ -1474,28 +1875,27 @@ gradient: Renk geçişi yapmamızı salar. decoration içerisinde tanımlanmalı
             ),           
  
 */
-
-//Container- BoxDecoration-Şevval
-//Column, Row - Nergiz
-//Text - Kemal
-//TextField - Beyza
-//Resim ekleme türleri - Begüm
-//Boyutlandırma Araçları(Expanded, Flexible, SizedBox, Spacer)- Safiye
-//Button ve button tasarımı - Ataberk
-//Navigator ve veri aktarımı - Onur
-//Align, Slider, Divider, CirculAvatar - Erkan
-//Radio, checkbox - Mehmet
-//Listview - Yusuf Tuncat
-//Gridview - Aydanur
-//Card, ListTile, Center - Efe Gerek
-//Forms(textformfield, validate) - Muhammed
-//Tabbar - Uğur
-//Bottom navigator bar - Yusuf Berke
-//Drawer - Yasin
-//alert - Osman
-//Snackbar - Umut
-//Appbar - Ali
-//Align, Positioned, Stack - Meriç
-//MaterialApp - Ahmet
-//stateless ve statefull ve setstate ve initstate - Ensar
-//Dropdownbutton ve popummenu - Metehan
+//1)MaterialApp - Ahmet
+//2)stateless ve statefull ve setstate ve initstate - Ensar
+//3)Appbar-Scaffold - Ali
+//4)Container- BoxDecoration-Şevval
+//5)Text - Kemal
+//6)Column, Row - Nergiz
+//7)Align, Positioned, Stack - Meriç
+//8)Boyutlandırma Araçları(Expanded, Flexible, SizedBox, Spacer)- Safiye
+//9)Resim ekleme türleri - Begüm
+//10)Navigator ve veri aktarımı - Onur
+//11)Button ve button tasarımı - Ataberk
+//12)TextField - Beyza
+//13)Forms(textformfield, validate) - Muhammed
+//14)Radio, checkbox - Mehmet
+//15)Dropdownbutton ve popummenu - Metehan
+//16)Align, Slider, Divider, CirculAvatar - Erkan
+//17)Card, ListTile, Center - Efe Gerek
+//18)Listview - Yusuf Tuncay
+//19)Gridview - Aydanur
+//20)alert - Osman
+//21)Snackbar - Umut
+//22)Tabbar - Uğur
+//23)Bottom navigator bar - Yusuf Berke
+//24)Drawer - Yasin
